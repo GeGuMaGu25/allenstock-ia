@@ -1,7 +1,14 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+/**
+ * @summary Componente raíz de la SPA AllenStock AI.
+ * @author Gustavo Alonso Olivares Lao
+ */
 </script>
 
 <template>
-  <HelloWorld />
+  <router-view/>
 </template>
+
+<style>
+body { margin: 0; font-family: var(--font-family); background-color: var(--surface-ground); }
+</style>
