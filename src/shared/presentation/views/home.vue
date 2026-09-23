@@ -27,6 +27,10 @@
       <router-link to="/cash" style="text-decoration: none;">
         <pv-button label="Gestión de Caja" icon="pi pi-wallet" severity="warning" size="large" raised />
       </router-link>
+
+      <router-link to="/analytics" style="text-decoration: none;">
+        <pv-button label="Analítica IA" icon="pi pi-bolt" severity="info" size="large" raised />
+      </router-link>
     </div>
   </div>
 </template>
