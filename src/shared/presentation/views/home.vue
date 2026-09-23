@@ -11,7 +11,7 @@
     <h1 class="text-primary m-0">AllenStock AI</h1>
     <p class="text-color-secondary mt-2 mb-5">Sistema POS e Inventario Inteligente (Setup Completo)</p>
 
-    <div class="flex gap-4">
+    <div class="flex gap-4 flex-wrap justify-content-center">
       <router-link to="/catalog" style="text-decoration: none;">
         <pv-button label="Catálogo Maestro" icon="pi pi-th-large" size="large" raised />
       </router-link>
@@ -21,7 +21,11 @@
       </router-link>
 
       <router-link to="/pos" style="text-decoration: none;">
-        <pv-button label="Abrir Terminal POS" icon="pi pi-shopping-cart" severity="success" size="large" raised />
+        <pv-button label="Terminal POS" icon="pi pi-shopping-cart" severity="success" size="large" raised />
+      </router-link>
+
+      <router-link to="/cash" style="text-decoration: none;">
+        <pv-button label="Gestión de Caja" icon="pi pi-wallet" severity="warning" size="large" raised />
       </router-link>
     </div>
   </div>
