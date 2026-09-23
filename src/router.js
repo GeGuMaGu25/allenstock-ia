@@ -12,6 +12,12 @@ const router = createRouter({
             path: '/home',
             name: 'home',
             component: () => import('./shared/presentation/views/home.vue')
+        },
+        // Nueva ruta para nuestro módulo de Catálogo
+        {
+            path: '/catalog',
+            name: 'catalog',
+            component: () => import('./catalog/presentation/components/catalog-list.vue')
         }
     ]
 });
