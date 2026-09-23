@@ -38,6 +38,11 @@ const router = createRouter({
             path: '/analytics',
             name: 'analytics',
             component: () => import('./analytics/presentation/components/ai-dashboard.vue')
+        },
+        {
+            path: '/purchasing',
+            name: 'purchasing',
+            component: () => import('./purchasing/presentation/components/claims-dashboard.vue')
         }
     ]
 });
