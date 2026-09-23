@@ -28,6 +28,11 @@ const router = createRouter({
             path: '/pos',
             name: 'pos',
             component: () => import('./sales/presentation/components/pos-view.vue')
+        },
+        {
+            path: '/cash',
+            name: 'cash',
+            component: () => import('./cash/presentation/components/cash-management.vue')
         }
     ]
 });
