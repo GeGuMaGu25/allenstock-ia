@@ -33,6 +33,11 @@ const router = createRouter({
             path: '/cash',
             name: 'cash',
             component: () => import('./cash/presentation/components/cash-management.vue')
+        },
+        {
+            path: '/analytics',
+            name: 'analytics',
+            component: () => import('./analytics/presentation/components/ai-dashboard.vue')
         }
     ]
 });
