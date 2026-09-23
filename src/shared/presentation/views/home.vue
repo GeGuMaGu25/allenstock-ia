@@ -11,9 +11,14 @@
     <h1 class="text-primary m-0">AllenStock AI</h1>
     <p class="text-color-secondary mt-2 mb-5">Sistema POS e Inventario Inteligente (Setup Completo)</p>
 
-    <!-- Botón de navegación utilizando Vue Router -->
-    <router-link to="/catalog" style="text-decoration: none;">
-      <pv-button label="Ingresar al Catálogo" icon="pi pi-th-large" size="large" raised />
-    </router-link>
+    <div class="flex gap-4">
+      <router-link to="/catalog" style="text-decoration: none;">
+        <pv-button label="Catálogo Maestro" icon="pi pi-th-large" size="large" raised />
+      </router-link>
+
+      <router-link to="/inventory" style="text-decoration: none;">
+        <pv-button label="Gestión de Inventario" icon="pi pi-box" severity="secondary" size="large" raised />
+      </router-link>
+    </div>
   </div>
 </template>

@@ -13,11 +13,16 @@ const router = createRouter({
             name: 'home',
             component: () => import('./shared/presentation/views/home.vue')
         },
-        // Nueva ruta para nuestro módulo de Catálogo
         {
             path: '/catalog',
             name: 'catalog',
             component: () => import('./catalog/presentation/components/catalog-list.vue')
+        },
+        // Nueva ruta para nuestro módulo de Inventario
+        {
+            path: '/inventory',
+            name: 'inventory',
+            component: () => import('./inventory/presentation/components/inventory-form.vue')
         }
     ]
 });
