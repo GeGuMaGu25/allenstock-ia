@@ -23,6 +23,11 @@ const router = createRouter({
             path: '/inventory',
             name: 'inventory',
             component: () => import('./inventory/presentation/components/inventory-form.vue')
+        },
+        {
+            path: '/pos',
+            name: 'pos',
+            component: () => import('./sales/presentation/components/pos-view.vue')
         }
     ]
 });

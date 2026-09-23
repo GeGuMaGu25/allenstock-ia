@@ -19,6 +19,10 @@
       <router-link to="/inventory" style="text-decoration: none;">
         <pv-button label="Gestión de Inventario" icon="pi pi-box" severity="secondary" size="large" raised />
       </router-link>
+
+      <router-link to="/pos" style="text-decoration: none;">
+        <pv-button label="Abrir Terminal POS" icon="pi pi-shopping-cart" severity="success" size="large" raised />
+      </router-link>
     </div>
   </div>
 </template>
