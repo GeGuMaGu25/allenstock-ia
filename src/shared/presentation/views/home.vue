@@ -31,6 +31,10 @@
       <router-link to="/analytics" style="text-decoration: none;">
         <pv-button label="Analítica IA" icon="pi pi-bolt" severity="info" size="large" raised />
       </router-link>
+
+      <router-link to="/purchasing" style="text-decoration: none;">
+        <pv-button label="Compras y Proveedores" icon="pi pi-truck" severity="help" size="large" raised />
+      </router-link>
     </div>
   </div>
 </template>
