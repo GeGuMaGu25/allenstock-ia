@@ -9,6 +9,11 @@
   <div class="min-h-screen surface-ground flex flex-column align-items-center justify-content-center">
     <i class="pi pi-desktop text-primary text-6xl mb-4"></i>
     <h1 class="text-primary m-0">AllenStock AI</h1>
-    <p class="text-color-secondary mt-2">Sistema POS e Inventario Inteligente (Setup Completo)</p>
+    <p class="text-color-secondary mt-2 mb-5">Sistema POS e Inventario Inteligente (Setup Completo)</p>
+
+    <!-- Botón de navegación utilizando Vue Router -->
+    <router-link to="/catalog" style="text-decoration: none;">
+      <pv-button label="Ingresar al Catálogo" icon="pi pi-th-large" size="large" raised />
+    </router-link>
   </div>
 </template>
