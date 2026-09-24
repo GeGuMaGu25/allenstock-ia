@@ -18,18 +18,15 @@ export const useCatalogStore = defineStore('catalog', () => {
     const fetchProducts = async () => {
         isLoading.value = true;
         try {
-            // Como aún no hemos construido el backend en C#, usaremos un "Mock" (datos falsos)
-            // simulando lo que nos devolvería el service.getProducts()
-            const mockData = [
-                { id: 1, codigo_barras: '7751234567890', nombre: 'Laptop ASUS ROG', categoria: 'Electrónica', precio_base: 1500.00 },
-                { id: 2, codigo_barras: '7750987654321', nombre: 'Teclado Mecánico', categoria: 'Accesorios', precio_base: 85.50 },
-                { id: 3, codigo_barras: '7751122334455', nombre: 'Monitor LG 27"', categoria: 'Electrónica', precio_base: 320.00 }
-            ];
+            // Llamamos al servicio de infraestructura que usa Axios
+            const response = await service.getProducts();
 
-            // Pasamos los datos crudos al ensamblador para que los convierta en entidades limpias
-            products.value = assembler.toEntitiesFromResponse(mockData);
+            // Axios guarda la respuesta del servidor en la propiedad ".data"
+            // Pasamos esos datos al ensamblador para convertirlos en Entidades
+            products.value = assembler.toEntitiesFromResponse(response.data);
+
         } catch (error) {
-            console.error('Error fetching catalog:', error);
+            console.error('Error al conectar con la API de .NET:', error);
         } finally {
             isLoading.value = false;
         }
