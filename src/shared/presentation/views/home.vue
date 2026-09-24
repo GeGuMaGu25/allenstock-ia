@@ -21,20 +21,30 @@ const iamStore = useIamStore();
         <router-link to="/catalog" style="text-decoration: none;">
           <pv-button label="Catálogo Maestro" icon="pi pi-th-large" size="large" raised />
         </router-link>
+
         <router-link to="/inventory" style="text-decoration: none;">
           <pv-button label="Gestión de Inventario" icon="pi pi-box" severity="secondary" size="large" raised />
         </router-link>
+
         <router-link to="/pos" style="text-decoration: none;">
           <pv-button label="Terminal POS" icon="pi pi-shopping-cart" severity="success" size="large" raised />
         </router-link>
+
         <router-link to="/cash" style="text-decoration: none;">
           <pv-button label="Gestión de Caja" icon="pi pi-wallet" severity="warning" size="large" raised />
         </router-link>
+
         <router-link to="/analytics" style="text-decoration: none;">
           <pv-button label="Analítica IA" icon="pi pi-bolt" severity="info" size="large" raised />
         </router-link>
+
         <router-link to="/purchasing" style="text-decoration: none;">
           <pv-button label="Compras y Proveedores" icon="pi pi-truck" severity="help" size="large" raised />
+        </router-link>
+
+        <!-- Botón de Promociones uniformizado con el resto del UI -->
+        <router-link to="/promotions" style="text-decoration: none;">
+          <pv-button label="Historial Promociones" icon="pi pi-tags" severity="danger" size="large" raised />
         </router-link>
       </div>
     </div>

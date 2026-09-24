@@ -1,22 +1,12 @@
-<script setup>
-import { onMounted } from 'vue';
-import { usePromotionsStore } from '../../application/promotions.store';
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import Card from 'primevue/card';
-import Tag from 'primevue/tag';
-
-const promotionsStore = usePromotionsStore();
-
-// Cuando el componente carga en pantalla, pedimos los datos al backend
-onMounted(async () => {
-  await promotionsStore.fetchActivePromotions();
-});
-</script>
-
 <template>
   <div class="p-4">
-    <h2 class="text-2xl font-bold mb-4 text-primary">Historial de Promociones IA</h2>
+    <!-- Cabecera con Título y Botón de Regreso -->
+    <div class="flex justify-content-between align-items-center mb-4">
+      <h2 class="text-2xl font-bold m-0 text-primary">Historial de Promociones IA</h2>
+      <router-link to="/home" style="text-decoration: none;">
+        <pv-button label="Volver al Inicio" icon="pi pi-arrow-left" severity="secondary" outlined />
+      </router-link>
+    </div>
 
     <Card class="shadow-2 border-round-xl">
       <template #content>
@@ -60,3 +50,18 @@ onMounted(async () => {
     </Card>
   </div>
 </template>
+
+<script setup>
+import { onMounted } from 'vue';
+import { usePromotionsStore } from '../../application/promotions.store';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Card from 'primevue/card';
+import Tag from 'primevue/tag';
+
+const promotionsStore = usePromotionsStore();
+
+onMounted(async () => {
+  await promotionsStore.fetchActivePromotions();
+});
+</script>
