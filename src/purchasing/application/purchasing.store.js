@@ -1,28 +1,29 @@
 /**
- * @summary Gestor de estado para Compras y Proveedores usando Pinia.
+ * @summary Gestor de estado para Compras y Proveedores conectado a la API.
  * @author Gustavo Alonso Olivares Lao
  */
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { SupplierClaim } from '../domain/model/supplier-claim.entity.js';
+import { PurchasingService } from '../infrastructure/purchasing.service.js';
+import { PurchasingAssembler } from '../infrastructure/purchasing.assembler.js';
 
 export const usePurchasingStore = defineStore('purchasing', () => {
     const claims = ref([]);
     const isLoading = ref(false);
 
+    const service = new PurchasingService();
+    const assembler = new PurchasingAssembler();
+
     const fetchClaims = async () => {
         isLoading.value = true;
         try {
-            await new Promise(resolve => setTimeout(resolve, 800));
-            // Simulamos reclamos autogenerados por mermas previas
-            claims.value = [
-                new SupplierClaim({
-                    id: 101, kardex_id: 50, proveedor_id: 1, estado: 'Notificado', observaciones: 'Merma reportada por pantalla rota. Correo enviado a proveedor.'
-                }),
-                new SupplierClaim({
-                    id: 102, kardex_id: 51, proveedor_id: 2, estado: 'En_Camino', fecha_envio_programado: '2026-09-30', observaciones: 'Cambio de lote vencido aprobado.'
-                })
-            ];
+            // Llamada real al backend en C#
+            const response = await service.getClaims();
+
+            // Mapeamos el JSON de respuesta hacia nuestras Entidades de Dominio
+            claims.value = response.data.map(claim => assembler.toEntity(claim));
+        } catch (error) {
+            console.error('Error al conectar con la API de Compras:', error);
         } finally {
             isLoading.value = false;
         }
