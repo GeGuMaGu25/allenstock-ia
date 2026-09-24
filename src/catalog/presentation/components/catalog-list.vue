@@ -10,59 +10,66 @@
 
     <Card class="shadow-2 border-round-xl">
       <template #content>
-        <TabView>
-          <!-- PESTAÑA 1: PRODUCTOS -->
-          <TabPanel header="Productos">
-            <div class="flex justify-content-end mb-3">
-              <pv-button label="Nuevo Producto" icon="pi pi-plus" severity="success" @click="openProductModal()" />
-            </div>
-            <DataTable :value="store.products" :loading="store.isLoading" paginator :rows="5" stripedRows responsiveLayout="scroll">
-              <Column header="Imagen">
-                <template #body="slotProps">
-                  <img :src="slotProps.data.imagen_url || 'https://via.placeholder.com/50'" alt="img" class="w-4rem h-4rem border-round shadow-1" style="object-fit: cover;" />
-                </template>
-              </Column>
-              <Column field="sku" header="SKU" sortable></Column>
-              <Column field="nombre" header="Nombre" sortable></Column>
-              <Column field="categoria_nombre" header="Categoría" sortable></Column>
-              <Column field="precio" header="Precio">
-                <template #body="slotProps">S/ {{ slotProps.data.precio.toFixed(2) }}</template>
-              </Column>
-              <Column field="stock_actual" header="Stock"></Column>
-              <Column header="Acciones">
-                <template #body="slotProps">
-                  <pv-button icon="pi pi-pencil" severity="info" text rounded @click="editProduct(slotProps.data)" />
-                  <pv-button icon="pi pi-trash" severity="danger" text rounded @click="deleteProduct(slotProps.data.id)" />
-                </template>
-              </Column>
-            </DataTable>
-          </TabPanel>
+        <Tabs value="productos">
+          <TabList>
+            <Tab value="productos">Productos</Tab>
+            <Tab value="categorias">Categorías</Tab>
+          </TabList>
 
-          <!-- PESTAÑA 2: CATEGORÍAS -->
-          <TabPanel header="Categorías">
-            <div class="flex justify-content-end mb-3">
-              <pv-button label="Nueva Categoría" icon="pi pi-plus" severity="success" @click="openCategoryModal()" />
-            </div>
-            <DataTable :value="store.categories" :loading="store.isLoading" paginator :rows="5" stripedRows responsiveLayout="scroll">
-              <Column field="id" header="ID" sortable></Column>
-              <Column field="nombre" header="Nombre" sortable></Column>
-              <Column field="descripcion" header="Descripción"></Column>
-              <Column header="Estado">
-                <template #body="slotProps">
-                  <Tag :severity="slotProps.data.activo ? 'success' : 'danger'">
-                    {{ slotProps.data.activo ? 'Activo' : 'Inactivo' }}
-                  </Tag>
-                </template>
-              </Column>
-              <Column header="Acciones">
-                <template #body="slotProps">
-                  <pv-button icon="pi pi-pencil" severity="info" text rounded @click="editCategory(slotProps.data)" />
-                  <pv-button icon="pi pi-trash" severity="danger" text rounded @click="deleteCategory(slotProps.data.id)" />
-                </template>
-              </Column>
-            </DataTable>
-          </TabPanel>
-        </TabView>
+          <TabPanels>
+            <!-- PESTAÑA 1: PRODUCTOS -->
+            <TabPanel value="productos">
+              <div class="flex justify-content-end mb-3">
+                <pv-button label="Nuevo Producto" icon="pi pi-plus" severity="success" @click="openProductModal()" />
+              </div>
+              <DataTable :value="store.products" :loading="store.isLoading" paginator :rows="5" stripedRows responsiveLayout="scroll">
+                <Column header="Imagen">
+                  <template #body="slotProps">
+                    <img :src="slotProps.data.imagen_url || 'https://via.placeholder.com/50'" alt="img" class="w-4rem h-4rem border-round shadow-1" style="object-fit: cover;" />
+                  </template>
+                </Column>
+                <Column field="sku" header="SKU" sortable></Column>
+                <Column field="nombre" header="Nombre" sortable></Column>
+                <Column field="categoria_nombre" header="Categoría" sortable></Column>
+                <Column field="precio" header="Precio">
+                  <template #body="slotProps">S/ {{ slotProps.data.precio.toFixed(2) }}</template>
+                </Column>
+                <Column field="stock_actual" header="Stock"></Column>
+                <Column header="Acciones">
+                  <template #body="slotProps">
+                    <pv-button icon="pi pi-pencil" severity="info" text rounded @click="editProduct(slotProps.data)" />
+                    <pv-button icon="pi pi-trash" severity="danger" text rounded @click="deleteProduct(slotProps.data.id)" />
+                  </template>
+                </Column>
+              </DataTable>
+            </TabPanel>
+
+            <!-- PESTAÑA 2: CATEGORÍAS -->
+            <TabPanel value="categorias">
+              <div class="flex justify-content-end mb-3">
+                <pv-button label="Nueva Categoría" icon="pi pi-plus" severity="success" @click="openCategoryModal()" />
+              </div>
+              <DataTable :value="store.categories" :loading="store.isLoading" paginator :rows="5" stripedRows responsiveLayout="scroll">
+                <Column field="id" header="ID" sortable></Column>
+                <Column field="nombre" header="Nombre" sortable></Column>
+                <Column field="descripcion" header="Descripción"></Column>
+                <Column header="Estado">
+                  <template #body="slotProps">
+                    <Tag :severity="slotProps.data.activo ? 'success' : 'danger'">
+                      {{ slotProps.data.activo ? 'Activo' : 'Inactivo' }}
+                    </Tag>
+                  </template>
+                </Column>
+                <Column header="Acciones">
+                  <template #body="slotProps">
+                    <pv-button icon="pi pi-pencil" severity="info" text rounded @click="editCategory(slotProps.data)" />
+                    <pv-button icon="pi pi-trash" severity="danger" text rounded @click="deleteCategory(slotProps.data.id)" />
+                  </template>
+                </Column>
+              </DataTable>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </template>
     </Card>
 
@@ -79,7 +86,8 @@
         </div>
         <div class="field col-6">
           <label>Categoría</label>
-          <Dropdown v-model="productForm.categoria_id" :options="store.categories" optionLabel="nombre" optionValue="id" placeholder="Seleccione" />
+          <!-- Cambiado de Dropdown a Select -->
+          <Select v-model="productForm.categoria_id" :options="store.categories" optionLabel="nombre" optionValue="id" placeholder="Seleccione" />
         </div>
       </div>
       <div class="formgrid grid">
@@ -124,20 +132,26 @@
 import { ref, onMounted } from 'vue';
 import { useCatalogStore } from '../../application/catalog.store';
 import Card from 'primevue/card';
-import TabView from 'primevue/tabview';
+
+import Tabs from 'primevue/tabs';
+import TabList from 'primevue/tablist';
+import Tab from 'primevue/tab';
+import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
+
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Tag from 'primevue/tag';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import InputNumber from 'primevue/inputnumber';
-import Dropdown from 'primevue/dropdown';
+
+// Cambiado de primevue/dropdown a primevue/select
+import Select from 'primevue/select';
 import Textarea from 'primevue/textarea';
 
 const store = useCatalogStore();
 
-// --- ESTADO LOCAL MODALES ---
 const showProductModal = ref(false);
 const showCategoryModal = ref(false);
 const isEditing = ref(false);
@@ -150,7 +164,6 @@ onMounted(async () => {
   await store.fetchData();
 });
 
-// --- LÓGICA PRODUCTOS ---
 const openProductModal = () => {
   isEditing.value = false;
   productForm.value = { nombre: '', sku: '', precio: 0, stock_actual: 0, imagen_url: '', categoria_id: null };
@@ -180,7 +193,6 @@ const deleteProduct = async (id) => {
   }
 };
 
-// --- LÓGICA CATEGORÍAS ---
 const openCategoryModal = () => {
   isEditing.value = false;
   categoryForm.value = { nombre: '', descripcion: '', activo: true };
@@ -208,7 +220,7 @@ const deleteCategory = async (id) => {
     try {
       await store.service.deleteCategory(id);
       await store.fetchData();
-    } catch (e) { alert('No se puede eliminar: ' + e.response.data.error); }
+    } catch (e) { alert('No se puede eliminar: ' + (e.response?.data?.error || e.message)); }
   }
 };
 </script>
