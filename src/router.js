@@ -23,7 +23,8 @@ const router = createRouter({
         { path: '/pos', component: () => import('./sales/presentation/components/pos-view.vue') },
         { path: '/cash', component: () => import('./cash/presentation/components/cash-management.vue') },
         { path: '/analytics', component: () => import('./analytics/presentation/components/ai-dashboard.vue') },
-        { path: '/purchasing', component: () => import('./purchasing/presentation/components/claims-dashboard.vue') }
+        { path: '/purchasing', component: () => import('./purchasing/presentation/components/claims-dashboard.vue') },
+        { path: '/promotions', component: () => import('./promotions/presentation/components/promotions-list.vue') },
     ]
 });
 

@@ -1,13 +1,12 @@
-/**
- * @summary Servicio de infraestructura para gestionar campañas de descuento.
- * @author Gustavo Alonso Olivares Lao
- */
 import axios from 'axios';
 
-const http = axios.create({ baseURL: import.meta.env.VITE_API_BASE_URL });
-
 export class PromotionsService {
-    applyDiscount(promoData) {
-        return http.post('/promotions/apply', promoData);
+    async applyDiscount(dto) {
+        return await axios.post('http://localhost:5271/api/v1/promotions/apply', dto);
+    }
+
+    // NUEVO METODO
+    async getActivePromotions() {
+        return await axios.get('http://localhost:5271/api/v1/promotions/active');
     }
 }
