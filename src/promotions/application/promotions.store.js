@@ -1,8 +1,11 @@
 import { defineStore } from 'pinia';
+import { ref } from 'vue'; // Asegúrate de importar ref
 import { PromotionsService } from '../infrastructure/promotions.service.js';
 
 export const usePromotionsStore = defineStore('promotions', () => {
     const service = new PromotionsService();
+    const activePromotions = ref([]); // Lista reactiva para la tabla
+    const isLoading = ref(false);
 
     const applyPromotionFromAi = async (recommendation) => {
         try {
@@ -26,5 +29,17 @@ export const usePromotionsStore = defineStore('promotions', () => {
         }
     };
 
-    return { applyPromotionFromAi };
+    const fetchActivePromotions = async () => {
+        isLoading.value = true;
+        try {
+            const response = await service.getActivePromotions();
+            activePromotions.value = response.data;
+        } catch (error) {
+            console.error('Error al obtener promociones:', error);
+        } finally {
+            isLoading.value = false;
+        }
+    };
+
+    return { activePromotions, isLoading, applyPromotionFromAi, fetchActivePromotions };
 });
