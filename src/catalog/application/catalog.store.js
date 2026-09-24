@@ -1,36 +1,28 @@
-/**
- * @summary Gestor de estado para el sub-dominio Catálogo usando Pinia.
- * @author Gustavo Alonso Olivares Lao
- */
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { CatalogService } from '../infrastructure/catalog.service.js';
-import { ProductAssembler } from '../infrastructure/product.assembler.js';
 
 export const useCatalogStore = defineStore('catalog', () => {
+    const service = new CatalogService();
     const products = ref([]);
+    const categories = ref([]);
     const isLoading = ref(false);
 
-    // Inyección de dependencias manual: instanciamos las herramientas que necesitamos
-    const service = new CatalogService();
-    const assembler = new ProductAssembler();
-
-    const fetchProducts = async () => {
+    const fetchData = async () => {
         isLoading.value = true;
         try {
-            // Llamamos al servicio de infraestructura que usa Axios
-            const response = await service.getProducts();
-
-            // Axios guarda la respuesta del servidor en la propiedad ".data"
-            // Pasamos esos datos al ensamblador para convertirlos en Entidades
-            products.value = assembler.toEntitiesFromResponse(response.data);
-
+            const [prodRes, catRes] = await Promise.all([
+                service.getProducts(),
+                service.getCategories()
+            ]);
+            products.value = prodRes.data;
+            categories.value = catRes.data;
         } catch (error) {
-            console.error('Error al conectar con la API de .NET:', error);
+            console.error('Error cargando el catálogo:', error);
         } finally {
             isLoading.value = false;
         }
     };
 
-    return { products, isLoading, fetchProducts };
+    return { products, categories, isLoading, fetchData, service };
 });
