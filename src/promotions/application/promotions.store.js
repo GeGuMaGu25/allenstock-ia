@@ -1,25 +1,30 @@
-/**
- * @summary Gestor de estado para aplicar y listar campañas de descuento.
- * @author Gustavo Alonso Olivares Lao
- */
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import { Promotion } from '../domain/model/promotion.entity.js';
+import { PromotionsService } from '../infrastructure/promotions.service.js';
 
 export const usePromotionsStore = defineStore('promotions', () => {
-    const activePromotions = ref([]);
+    const service = new PromotionsService();
 
-    // Simula la escucha del evento RecomendacionAprobada
-    const applyPromotionFromAi = (recommendation) => {
-        const newPromo = new Promotion({
-            id: Date.now(),
-            producto_id: recommendation.productId,
-            porcentaje_descuento: 20,
-            estado: 'Activa'
-        });
-        activePromotions.value.push(newPromo);
-        return { success: true, message: '¡Promoción activada en el catálogo!' };
+    const applyPromotionFromAi = async (recommendation) => {
+        try {
+            // AQUÍ ESTÁ LA MAGIA: Asegurándonos de enviar exactamente lo que C# pide.
+            // Validamos si viene como 'reason' o como 'justificacion_ia' para evitar nulos.
+            const justificacion = recommendation.reason || recommendation.justificacion_ia || "Justificación generada automáticamente por IA.";
+
+            const dto = {
+                producto_id: recommendation.productId || recommendation.id || 2,
+                porcentaje_descuento: 20.00,
+                justificacion_ia: justificacion
+            };
+
+            console.log('Enviando a C#:', dto); // Te ayudará a ver qué se envía en la consola (F12)
+
+            const response = await service.applyDiscount(dto);
+            return { success: true, message: response.data.message };
+        } catch (error) {
+            console.error('Error al aplicar la promoción:', error);
+            return { success: false, message: 'Error al registrar la promoción en la base de datos.' };
+        }
     };
 
-    return { activePromotions, applyPromotionFromAi };
+    return { applyPromotionFromAi };
 });

@@ -1,33 +1,33 @@
 /**
- * @summary Gestor de estado para procesar y almacenar las predicciones de OpenAI.
+ * @summary Gestor de estado para las predicciones de IA conectado a la API.
  * @author Gustavo Alonso Olivares Lao
  */
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { AiRecommendation } from '../domain/model/ai-recommendation.entity.js';
+import { AnalyticsService } from '../infrastructure/analytics.service.js';
+import { AiAssembler } from '../infrastructure/ai.assembler.js';
 
 export const useAnalyticsStore = defineStore('analytics', () => {
     const recommendations = ref([]);
-    const isAnalyzing = ref(false);
+    const isLoading = ref(false);
+
+    const service = new AnalyticsService();
+    const assembler = new AiAssembler();
 
     const fetchPredictions = async () => {
-        isAnalyzing.value = true;
+        isLoading.value = true;
         try {
-            // Simula el tiempo de procesamiento de OpenAI
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            recommendations.value = [
-                new AiRecommendation({
-                    id: 1,
-                    producto_id: 2, // Teclado Mecánico
-                    accion_sugerida: 'Promocion',
-                    probabilidad_exito: 0.88,
-                    justificacion_ia: 'Baja rotación histórica en este trimestre. Se sugiere aplicar un 20% de descuento para liberar stock antes de fin de año.'
-                })
-            ];
+            const response = await service.getPredictions();
+
+            // Opción A: Si tu ensamblador se encarga de traducir el DTO
+            recommendations.value = response.data.map(item => assembler.toEntity(item));
+
+        } catch (error) {
+            console.error('Error al obtener predicciones de IA:', error);
         } finally {
-            isAnalyzing.value = false;
+            isLoading.value = false;
         }
     };
 
-    return { recommendations, isAnalyzing, fetchPredictions };
+    return { recommendations, isLoading, fetchPredictions };
 });
